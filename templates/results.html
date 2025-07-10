@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="result">
+    <h2>Your CKD Risk Assessment Results</h2>
+    <div id="risk-message">
+        <p>Your calculated CKD risk score: <strong>{{ result.risk_score }}/20</strong></p>
+        <p>Risk level: <span class="risk-{{ result.risk_level }}">{{ result.risk_level.upper() }}</span></p>
+        <p>Estimated 5-year risk of developing CKD: {{ result.risk_percentage }}</p>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: {{ (result.risk_score / 20) * 100 }}%; 
+                background-color: {% if result.risk_level == 'high' %}var(--danger-color){% elif result.risk_level == 'moderate' %}var(--warning-color){% else %}var(--secondary-color){% endif %}">
+            </div>
+        </div>
+    </div>
+    
+    <div id="risk-explanation">
+        <h3>Key Risk Factors Identified:</h3>
+        <ul>
+            {% if result.age >= 50 %}<li>Age ({{ result.age }} years)</li>{% endif %}
+            {% if result.race == 'black' %}<li>African American ethnicity</li>{% endif %}
+            {% if result.hypertension != 'no' %}<li>{{ 'Hypertension' if result.hypertension == 'yes' else 'Borderline hypertension' }}</li>{% endif %}
+            <!-- Other risk factors -->
+        </ul>
+    </div>
+    
+    <div class="download-buttons">
+        <button id="download-text" class="download-btn">Download Text Report</button>
+    </div>
+    
+    <button id="reset-btn">Start New Assessment</button>
+</section>
+{% endblock %}

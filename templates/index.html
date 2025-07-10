@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="form-section">
+    <h2>Welcome to CKD Risk Assessment</h2>
+    <p>This tool helps estimate your risk of developing chronic kidney disease based on established clinical factors.</p>
+    <a href="{{ url_for('assessment') }}" class="button">Begin Assessment</a>
+</section>
+{% endblock %}
